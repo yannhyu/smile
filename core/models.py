@@ -8,3 +8,10 @@ class Comment(models.Model):
         self.email = email
         self.content = content
         self.created = created or datetime.now()
+
+
+class Launchpad(models.Model):
+    def __init__(self, id, name, status):
+        self.id = id
+        self.name = name
+        self.status = status

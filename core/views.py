@@ -6,8 +6,25 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 
-from core.models import Comment
-from core.serializers import CommentSerializer
+from core.models import Comment, Launchpad
+from core.serializers import CommentSerializer, LaunchpadSerializer
+
+
+class LaunchpadViewSet(viewsets.ModelViewSet):
+    queryset = Launchpad.objects.all()
+    serializer_class = LaunchpadSerializer
+    def list(self, request, *args, **kwargs):
+        launchpad = Launchpad(
+            id='kwajalein_atoll',
+            name='Kwajalein Atoll Omelek Island',
+            status='retired')
+        launchpad2 = Launchpad(
+            id='kwajalein_atoll 2',
+            name='Kwajalein Atoll Omelek Island 2',
+            status='retired')
+        launchpads = [launchpad, launchpad2]
+        serializer = LaunchpadSerializer(launchpads, many=True)
+        return Response(serializer.data)
 
 
 class TestCommentViewSet(viewsets.ModelViewSet):
