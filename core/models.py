@@ -15,3 +15,6 @@ class Launchpad(models.Model):
         self.id = id
         self.name = name
         self.status = status
+
+    def __str__(self):
+        return self.name
