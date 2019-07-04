@@ -1,0 +1,6 @@
+dj-database-url==0.4.2
+Django==2.0.2
+gunicorn==19.7.1
+requests==2.18.4
+python-decouple==3.1
+djangorestframework>=3.9.0,<3.10.0
