@@ -1,3 +1,5 @@
+from collections import namedtuple
+import json
 import requests
 from django.core import serializers
 from rest_framework.views import APIView
@@ -8,6 +10,15 @@ from rest_framework import viewsets
 
 from core.models import Comment, Launchpad
 from core.serializers import CommentSerializer, LaunchpadSerializer
+
+def get_spacexdata_source():
+    SPACEX_URL = 'https://api.spacexdata.com/v2/launchpads'
+    response = requests.get(SPACEX_URL)
+    assert(response.status_code == 200)
+    data = response.text
+    # Parse JSON into an object with attributes corresponding to dict keys.
+    launchpads = json.loads(data, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+    return launchpads
 
 
 class LaunchpadViewSet(viewsets.ModelViewSet):
@@ -22,7 +33,7 @@ class LaunchpadViewSet(viewsets.ModelViewSet):
             id='kwajalein_atoll 2',
             name='Kwajalein Atoll Omelek Island 2',
             status='retired')
-        launchpads = [launchpad, launchpad2]
+        launchpads = get_spacexdata_source()
         serializer = LaunchpadSerializer(launchpads, many=True)
         return Response(serializer.data)
 

@@ -9,5 +9,5 @@ class CommentSerializer(serializers.Serializer):
 
 class LaunchpadSerializer(serializers.Serializer):
     id = serializers.CharField(max_length=60)
-    name = serializers.CharField(max_length=100)
+    full_name = serializers.CharField(max_length=100)
     status = serializers.CharField(max_length=30)
